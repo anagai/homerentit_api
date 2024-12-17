@@ -18,9 +18,9 @@ class DataAccessWrapper implements IDataAccessWrapper {
         return result ?? null;
     }
 
-    async update(tableName: TableNames, record: any): Promise<boolean> {
+    async update<T>(tableName: TableNames, record: any): Promise<T | null> {
         const result = await (this._dbClient[tableName] as any).update({ where: { id: record.id }, data: record });
-        return result !== null;
+        return result ?? null;
     }
 
     async delete(tableName: TableNames, criteria: object): Promise<boolean> {
