@@ -1,6 +1,6 @@
 import { IsRequiredString, IsRequiredId } from '../decorators/validation.decorators';
 
-export default class UpdateRoomRequestDto {
+export default class UpdateAmenityRequestDto {
     
     @IsRequiredId()
     id: string;

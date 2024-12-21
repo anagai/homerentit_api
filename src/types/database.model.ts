@@ -29,6 +29,8 @@ type PropertyRoom = {
     room_id: string;
 }
 
+// View models
+
 type PropertyView = {
     id: string;
     description: string;

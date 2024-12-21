@@ -1,6 +1,6 @@
 import { IsRequiredString } from 'src/decorators/validation.decorators';
 
-export default class AddRoomRequestDto {
+export default class AddAmenityRequestDto {
     @IsRequiredString(50)
     name: string;
 }

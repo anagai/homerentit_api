@@ -1,27 +1,37 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './controllers/app.controller';
-import { AppService } from './services/app.service';
-import { PropertyController } from './controllers/property.controller';
-import { PropertyService } from './services/property.service';
 import { PrismaClient } from '@prisma/client';
 import IocTypes from './types/ioc-types';
 import DataAccessWrapper from './data/data-access-wrapper';
-import { RoomService } from './services/room.service';
-import { RoomController } from './controllers/room.controller';
+import DataMapper from './data/data-mapper';
+import {
+  PropertyService,
+  AmenityService,
+  AppService,
+  RoomService
+} from './services'
+import { 
+  PropertyController,
+  RoomController,
+  AppController,
+  AmenityController
+} from './controllers'
 
 @Module({
   imports: [],
   controllers: [
     AppController,
     PropertyController,
-    RoomController
+    RoomController,
+    AmenityController
   ],
   providers: [
     AppService,
     { provide: IocTypes.IPropertyService, useClass: PropertyService },
     { provide: IocTypes.IPrismaClient, useClass: PrismaClient },
     { provide: IocTypes.IDataAccessWrapper, useClass: DataAccessWrapper },
-    { provide: IocTypes.IRoomService, useClass: RoomService }
+    { provide: IocTypes.IAmenityService, useClass: AmenityService },
+    { provide: IocTypes.IRoomService, useClass: RoomService },
+    { provide: IocTypes.IDataMapper, useClass: DataMapper }
   ],
 })
 export class AppModule {}

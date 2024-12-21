@@ -1,15 +1,12 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { IPropertyService } from './property-service.interface';
-import { 
-  room as Room
-} from '@prisma/client';
+import {  room as Room } from '@prisma/client';
 import IocTypes from 'src/types/ioc-types';
 import IDataAccessWrapper from 'src/data/data-access-wrapper.interface';
 import { Tables } from '../constants'
 import { IRoomService } from './room-service.interface';
 
 @Injectable()
-export class RoomService implements IRoomService {
+export default class RoomService implements IRoomService {
   
   constructor(
       @Inject(IocTypes.IDataAccessWrapper) private readonly _dbAccess: IDataAccessWrapper

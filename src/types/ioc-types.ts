@@ -16,6 +16,8 @@ const IocTypes = {
     IAmenityController: Symbol.for("IAmenityController"),
     IRoomController: Symbol.for("IRoomController"),
 
+    IDataMapper: Symbol.for("IDataMapper"),
+
 }
 
 export default IocTypes
