@@ -7,6 +7,10 @@ import ErrorHandlerHelper from 'src/helpers/error-handler.helper';
 import AddPropertyRequestDto from 'src/DTO/add-property-request.dto';
 import UpdatePropertyRequestDto from 'src/DTO/update-property-request.dto';
 import IDataMapper from 'src/data/data-mapper.interface';
+import { Decimal } from '@prisma/client/runtime/library';
+import PropertyResponseDto from 'src/DTO/property-response.dto';
+import DataMapper from 'src/data/data-mapper';
+import IdRequestDto from 'src/DTO/id-request.dto';
 
 @Controller('property')
 export default class PropertyController {
@@ -16,11 +20,11 @@ export default class PropertyController {
   ) {}
 
   @Post()
-  async add(@Body() request: AddPropertyRequestDto): Promise<Property> {
+  async add(@Body() request: AddPropertyRequestDto): Promise<PropertyResponseDto> {
      try {
       const property = await this._dataMapper.mapAddRequestDtoToProperty(request, uuid());
-      console.log("PropertyController.add property:", property);
-      return await this._propService.addProperty(property);
+      const result: Property = await this._propService.addProperty(property);
+      return this._dataMapper.mapPropertyToResponseDto(result);
      } catch (error) {
       console.error("Error in PropertyController.add:", error);
       ErrorHandlerHelper.CatchErrorHandler(error);
@@ -28,10 +32,11 @@ export default class PropertyController {
   }
 
   @Put()
-  async update(@Body() request: UpdatePropertyRequestDto): Promise<boolean> {
+  async update(@Body() request: UpdatePropertyRequestDto): Promise<PropertyResponseDto> {
       try {
         const property = await this._dataMapper.mapUpdateRequestDtoToProperty(request);
-        return await this._propService.updateProperty(property);
+        const result: Property = await this._propService.updateProperty(property);
+        return this._dataMapper.mapPropertyToResponseDto(result);
       } catch (error) {
         console.error("Error in RoomController.update:", error);
         ErrorHandlerHelper.CatchErrorHandler(error);
@@ -48,7 +53,29 @@ export default class PropertyController {
     }
   }
 
+  @Get(':id')
+  async getById(@Param() params: IdRequestDto): Promise<Property> {
+      try {
+        const result = await this._propService.getPropertyById(params.id);
+        if (!result) {
+          throw new NotFoundException('Property not found');
+        }
+        return result;
+      } catch(error) {
+        console.error("Error in PropertyController.getById:", error);
+        ErrorHandlerHelper.CatchErrorHandler(error);
+      }
+  }
 
+  @Delete(':id')
+  async removeById(@Param() params: IdRequestDto): Promise<Property> {
+      try {
+        return await this._propService.removePropertyById(params.id);
+      } catch (error) {
+        console.error("Error in PropertyController.removeById:", error);
+        ErrorHandlerHelper.CatchErrorHandler(error);
+      }
+  }
 
 
 }

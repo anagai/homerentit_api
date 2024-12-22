@@ -59,7 +59,7 @@ export default class AmenityController {
     }
 
     @Delete(':id')
-    async removeById(@Param() params: IdRequestDto): Promise<boolean> {
+    async removeById(@Param() params: IdRequestDto): Promise<Amenity> {
         try {
           return await this._amenityService.removeAmenityById(params.id);
         } catch (error) {

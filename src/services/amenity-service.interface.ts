@@ -3,9 +3,9 @@ import {
 } from '@prisma/client';
 
 export interface IAmenityService {
-    addAmenity(room: Amenity): Promise<Amenity | null>;
-    updateAmenity(room: Amenity): Promise<Amenity | null>;
-    getAmenityById(id: string): Promise<Amenity | null>;
-    getAllAmenities(): Promise<Amenity[] | []>;
-    removeAmenityById(id: string): Promise<boolean>;
+    addAmenity(room: Amenity): Promise<Amenity>;
+    updateAmenity(room: Amenity): Promise<Amenity>;
+    getAmenityById(id: string): Promise<Amenity>;
+    getAllAmenities(): Promise<Amenity[]>;
+    removeAmenityById(id: string): Promise<Amenity>;
 }

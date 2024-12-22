@@ -6,6 +6,7 @@ import Decimal from 'decimal.js';
 import IocTypes from 'src/types/ioc-types';
 import IPrismaClient from './prisma-client.interface';
 import IDataMapper from './data-mapper.interface';
+import PropertyResponseDto from 'src/DTO/property-response.dto';
 
 @Injectable()
 export default class DataMapper implements IDataMapper{
@@ -14,29 +15,43 @@ export default class DataMapper implements IDataMapper{
         @Inject(IocTypes.IPrismaClient) private readonly _dbClient: IPrismaClient
     ) {}
 
-    async mapAddRequestDtoToProperty(dto: AddPropertyRequestDto, id: string): Promise<Property> {
+    mapAddRequestDtoToProperty(dto: AddPropertyRequestDto, id: string): Property {
         const property: Property = {
             id,
-            area_info: dto.area_info,
-            price: new Decimal(dto.price),
+            area_info: dto.areaInfo,
+            price: new Decimal(dto.price), // convert string to Decimal
             description: dto.description,
-            max_guests: dto.max_guests,
+            max_guests: dto.maxGuests,
             city: dto.city,
             state: dto.state
         };
         return property;
     }
 
-    async mapUpdateRequestDtoToProperty(dto: UpdatePropertyRequestDto): Promise<Property> {
+    mapUpdateRequestDtoToProperty(dto: UpdatePropertyRequestDto): Property {
         const property: Property = {
             id: dto.id,
-            area_info: dto.area_info,
+            area_info: dto.areaInfo,
             price: new Decimal(dto.price),
             description: dto.description,
-            max_guests: dto.max_guests,
+            max_guests: dto.maxGuests,
             city: dto.city,
             state: dto.state
         };
         return property;
     }
+
+    mapPropertyToResponseDto(property: Property): PropertyResponseDto {
+        const response: PropertyResponseDto = {
+            id: property.id,
+            description: property.description,
+            city: property.city,
+            state: property.state,
+            areaInfo: property.area_info,
+            maxGuests: property.max_guests,
+            price: property.price.toFixed(2) // Convert price to string
+        }
+        return response;
+    }
+   
 }

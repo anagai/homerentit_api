@@ -12,18 +12,18 @@ class DataAccessWrapper implements IDataAccessWrapper {
         @Inject(IocTypes.IPrismaClient) private readonly _dbClient: IPrismaClient
     ) {}
     
-    async add<T>(tableName: TableNames, record: any): Promise<T | null> {
+    async add<T>(tableName: TableNames, record: any): Promise<T> {
         const result = await (this._dbClient[tableName] as any).create({data: record});
         console.log('add result:', result);
-        return result ?? null;
+        return result;
     }
 
-    async update<T>(tableName: TableNames, record: any): Promise<T | null> {
+    async update<T>(tableName: TableNames, record: any): Promise<T> {
         const result = await (this._dbClient[tableName] as any).update({ where: { id: record.id }, data: record });
-        return result ?? null;
+        return result;
     }
 
-    async delete(tableName: TableNames, criteria: object): Promise<boolean> {
+    async delete<T>(tableName: TableNames, criteria: object): Promise<T> {
         const keys = Object.keys(criteria);
         let whereCriteria;
         if (keys.length > 1) {
@@ -37,19 +37,17 @@ class DataAccessWrapper implements IDataAccessWrapper {
             whereCriteria = criteria;
         }
         const result = await (this._dbClient[tableName] as any).delete({ where: whereCriteria });
-        return result !== null;
+        return result;
     }
 
-    async getById<T>(tableName: TableNames, id: string): Promise<T | null>{
+    async getById<T>(tableName: TableNames, id: string): Promise<T>{
         const result = await (this._dbClient[tableName] as any).findUnique({ where: { id } });
-        return result ?? null;
+        return result;
     }
 
-    async getAll<T>(tableName: TableNames): Promise<T[] | []>{
-        console.log('getAll:', tableName);
+    async getAll<T>(tableName: TableNames): Promise<T[]>{
         const result = await (this._dbClient[tableName] as any).findMany();
-        console.log('results:', result);
-        return result ?? [];
+        return result;
     }
 
     getClient(): IPrismaClient {

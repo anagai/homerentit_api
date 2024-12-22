@@ -1,5 +1,5 @@
 import { IsRequiredString } from 'src/decorators/validation.decorators';
-import { IsDecimal, IsInt, IsNumber, IsString, MaxLength } from 'class-validator';
+import { IsCurrency, IsInt, IsString, MaxLength, Min } from 'class-validator';
 
 
 export default class AddPropertyRequestDto {
@@ -14,11 +14,13 @@ export default class AddPropertyRequestDto {
 
     @IsString()
     @MaxLength(1000)
-    area_info
+    areaInfo: string;
 
     @IsInt()
-    max_guests: number;
+    @Min(1)
+    maxGuests: number;
 
-    @IsNumber()
-    price: number;
+    @IsRequiredString()
+    @IsCurrency()
+    price: string;
 }

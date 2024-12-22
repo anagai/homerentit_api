@@ -15,15 +15,15 @@ export default class PropertyService implements IPropertyService {
       @Inject(IocTypes.IDataAccessWrapper) private readonly _dbAccess: IDataAccessWrapper
     ) {}
   
-  async addProperty(prop: Property): Promise<Property | null> {
-      return await this._dbAccess.add<Property>(Tables.PROPERTY, prop);
+  async addProperty(prop: Property): Promise<Property> {
+    return await this._dbAccess.add<Property>(Tables.PROPERTY, prop);
   }
 
-  async updateProperty(prop: Property): Promise<boolean> {
+  async updateProperty(prop: Property): Promise<Property> {
       return await this._dbAccess.update(Tables.PROPERTY, prop );
   }
 
-  async getPropertyById(id: string): Promise<Property | null>{
+  async getPropertyById(id: string): Promise<Property>{
       return await this._dbAccess.getById<Property>(Tables.PROPERTY, id);
   }
 
@@ -31,11 +31,12 @@ export default class PropertyService implements IPropertyService {
     //TODO: Make a property response dto so can convert price to number
     // This should ruturn the dto type
     const properties = await this._dbAccess.getAll<Property>(Tables.PROPERTY);
-    return properties.map(p => ({...p, price: p.price.toNumber()}));
+    return properties;
+    //return properties.map(p => ({...p, price: p.price.toNumber()}));
   }
 
-  async removePropertyById(id: string): Promise<boolean> {
-      return await this._dbAccess.delete(Tables.PROPERTY, { id });
+  async removePropertyById(id: string): Promise<Property> {
+      return await this._dbAccess.delete<Property>(Tables.PROPERTY, { id });
   }
 
   async getPropertyView(propertyId: string): Promise<PropertyView | null> {

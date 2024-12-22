@@ -4,10 +4,10 @@ import {
 import { PropertyView } from 'src/types/database.model';
 
 export interface IPropertyService {
-    addProperty(prop: Property): Promise<Property | null>;
-    updateProperty(property: Property): Promise<boolean>;
-    getPropertyById(id: string): Promise<Property | null>;
+    addProperty(prop: Property): Promise<Property>;
+    updateProperty(property: Property): Promise<Property>;
+    getPropertyById(id: string): Promise<Property>;
     getAllProperties(): Promise<Property[]>;
-    removePropertyById(id: string): Promise<boolean>;
+    removePropertyById(id: string): Promise<Property>;
     getPropertyView(propertyId: string): Promise<PropertyView | null>;
 }
