@@ -1,13 +1,15 @@
-import { NotFoundException, InternalServerErrorException } from "@nestjs/common/exceptions";
+import { NotFoundException, InternalServerErrorException, BadRequestException } from "@nestjs/common/exceptions";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
 export default class ErrorHandlerHelper {
 
     static CatchErrorHandler(error: Error) {
         if(error instanceof PrismaClientKnownRequestError) {
-            throw new NotFoundException('Record not found');
+            //TODO: Add logic to return specific exception by error.code
+            //e.g. if(error.code==='P2002')
+            throw new BadRequestException('Bad Request');
         } else if(error instanceof NotFoundException) {
-            throw new NotFoundException(error.message);
+            throw error;
         } else {
             throw new InternalServerErrorException(error.message);
         }

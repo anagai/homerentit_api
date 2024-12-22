@@ -4,7 +4,6 @@ import * as sanitizeHtml from 'sanitize-html';
 @Injectable()
 export class SanitizePipe implements PipeTransform {
   transform(value: any, metadata: ArgumentMetadata): any {
-    console.log("Sanitizing value:",value);
     if (typeof value === 'string') {
       console.log("Sanitizing string:",value);  
       return sanitizeHtml(value); // Sanitize strings
