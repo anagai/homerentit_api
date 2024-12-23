@@ -1,5 +1,6 @@
 import { v4 as uuid } from 'uuid';
-import { Controller, Inject, Param, Get, Post, Put, Delete, Body, NotFoundException } from '@nestjs/common';
+import { Controller, Inject, Param, Get, Post, Put, Delete, Body } from '@nestjs/common';
+import NotFoundException from 'src/exceptions/not-found.exception';
 import { amenity as Amenity } from '@prisma/client';
 import IocTypes from 'src/types/ioc-types';
 import IdRequestDto from 'src/DTO/id-request.dto';
@@ -7,6 +8,8 @@ import ErrorHandlerHelper from 'src/helpers/error-handler.helper';
 import { IAmenityService } from 'src/services/amenity-service.interface';
 import AddAmenityRequestDto from 'src/DTO/add-amenity-request.dto';
 import UpdateAmenityRequestDto from 'src/DTO/update-amenity-request.dto';
+import ResponseHelper from 'src/helpers/response-helper';
+import { StatusResponse } from 'src/types/status-response.type';
 
 @Controller('amenity')
 export default class AmenityController {
@@ -59,9 +62,10 @@ export default class AmenityController {
     }
 
     @Delete(':id')
-    async removeById(@Param() params: IdRequestDto): Promise<Amenity> {
+    async removeById(@Param() params: IdRequestDto): Promise<StatusResponse> {
         try {
-          return await this._amenityService.removeAmenityById(params.id);
+          await this._amenityService.removeAmenityById(params.id);
+          return ResponseHelper.successResponse();
         } catch (error) {
           console.error("Error in AmenityController.removeById:", error);
           ErrorHandlerHelper.CatchErrorHandler(error);

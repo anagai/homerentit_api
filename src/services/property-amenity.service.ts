@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import IDataAccessWrapper from 'src/data/data-access-wrapper.interface';
 import { property_amenity as PropertyAmenity, amenity as Amenity } from '@prisma/client';
 import IocTypes from 'src/types/ioc-types';

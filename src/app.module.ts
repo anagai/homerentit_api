@@ -8,14 +8,16 @@ import {
   AmenityService,
   AppService,
   RoomService,
-  PropertyAmenityService
+  PropertyAmenityService,
+  PropertyRoomService
 } from './services'
 import { 
   PropertyController,
   RoomController,
   AppController,
   AmenityController,
-  PropertyAmenityController
+  PropertyAmenityController,
+  PropertyRoomController
 } from './controllers'
 
 @Module({
@@ -25,7 +27,8 @@ import {
     PropertyController,
     RoomController,
     AmenityController,
-    PropertyAmenityController
+    PropertyAmenityController,
+    PropertyRoomController
   ],
   providers: [
     AppService,
@@ -35,7 +38,8 @@ import {
     { provide: IocTypes.IAmenityService, useClass: AmenityService },
     { provide: IocTypes.IRoomService, useClass: RoomService },
     { provide: IocTypes.IDataMapper, useClass: DataMapper },
-    { provide: IocTypes.IPropertyAmenityService, useClass: PropertyAmenityService }
+    { provide: IocTypes.IPropertyAmenityService, useClass: PropertyAmenityService },
+    { provide: IocTypes.IPropertyRoomService, useClass: PropertyRoomService }
   ],
 })
 export class AppModule {}

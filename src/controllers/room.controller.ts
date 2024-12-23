@@ -1,5 +1,6 @@
 import { v4 as uuid } from 'uuid';
-import { Controller, Inject, Param, Get, Post, Put, Delete, Body, NotFoundException } from '@nestjs/common';
+import { Controller, Inject, Param, Get, Post, Put, Delete, Body } from '@nestjs/common';
+import NotFoundException from 'src/exceptions/not-found.exception';
 import { IRoomService } from 'src/services/room-service.interface';
 import { room as Room } from '@prisma/client';
 import IocTypes from 'src/types/ioc-types';
@@ -7,6 +8,8 @@ import AddRoomRequestDto from 'src/DTO/add-room-request.dto';
 import UpdateRoomRequestDto from 'src/DTO/update-room-request.dto';
 import IdRequestDto from 'src/DTO/id-request.dto';
 import ErrorHandlerHelper from 'src/helpers/error-handler.helper';
+import ResponseHelper from 'src/helpers/response-helper';
+import { StatusResponse } from 'src/types/status-response.type';
 
 @Controller('room')
 export default class RoomController {
@@ -60,9 +63,10 @@ export default class RoomController {
     }
 
     @Delete(':id')
-    async removeById(@Param() params: IdRequestDto): Promise<Room> {
+    async removeById(@Param() params: IdRequestDto): Promise<StatusResponse> {
         try {
-          return await this._roomService.removeRoomById(params.id);
+          await this._roomService.removeRoomById(params.id);
+          return ResponseHelper.successResponse();
         } catch (error) {
           console.error("Error in RoomController.removeById:", error);
           ErrorHandlerHelper.CatchErrorHandler(error);

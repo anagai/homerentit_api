@@ -61,3 +61,8 @@ export class Errors {
   export class Storage {
     public static readonly NEW_PROPERTY_DATA = 'newPropertyData';
   }
+
+  export class Status {
+    public static readonly FAILED = 'Failed';
+    public static readonly SUCCESS = 'Success';
+  }
