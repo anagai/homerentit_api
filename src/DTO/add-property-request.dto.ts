@@ -3,6 +3,10 @@ import { IsCurrency, IsInt, IsString, MaxLength, Min } from 'class-validator';
 
 
 export default class AddPropertyRequestDto {
+    
+    @IsRequiredString(255)
+    title: string;
+
     @IsRequiredString(1000)
     description: string;
 

@@ -18,6 +18,7 @@ export default class DataMapper implements IDataMapper{
     mapAddRequestDtoToProperty(dto: AddPropertyRequestDto, id: string): Property {
         const property: Property = {
             id,
+            title: dto.title,
             area_info: dto.areaInfo,
             price: new Decimal(dto.price), // convert string to Decimal
             description: dto.description,
@@ -31,6 +32,7 @@ export default class DataMapper implements IDataMapper{
     mapUpdateRequestDtoToProperty(dto: UpdatePropertyRequestDto): Property {
         const property: Property = {
             id: dto.id,
+            title: dto.title,
             area_info: dto.areaInfo,
             price: new Decimal(dto.price),
             description: dto.description,
@@ -44,6 +46,7 @@ export default class DataMapper implements IDataMapper{
     mapPropertyToResponseDto(property: Property): PropertyResponseDto {
         const response: PropertyResponseDto = {
             id: property.id,
+            title: property.title,
             description: property.description,
             city: property.city,
             state: property.state,

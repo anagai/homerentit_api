@@ -8,6 +8,9 @@ export default class UpdatePropertyRequestDto {
     @IsRequiredString(36)
     id: string;
     
+    @IsRequiredString(255)
+    title: string;
+
     @IsRequiredString(1000)
     description: string;
 

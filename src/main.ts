@@ -13,7 +13,13 @@ async function bootstrap() {
   // set /api as base path for endpoints
   app.setGlobalPrefix('api');
   app.enableCors({
-    origin: 'http://localhost:3000', // Allow specific origin
+    origin: (origin, callback) => {
+      if (!origin || origin.startsWith('http://localhost')) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Allow specific methods
     //credentials: true, // Allow credentials
   });

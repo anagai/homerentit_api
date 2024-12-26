@@ -7,9 +7,10 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+/// This model contains an expression index which requires additional setup for migrations. Visit https://pris.ly/d/expression-indexes for more info.
 model amenity {
   id               String             @id @db.Char(36)
-  name             String?            @db.VarChar(100)
+  name             String?            @db.VarChar(50)
   property_amenity property_amenity[]
 }
 
@@ -22,6 +23,7 @@ model property {
   area_info        String?            @db.VarChar(1000)
   max_guests       Int?
   price            Decimal?           @db.Decimal(8, 2)
+  title            String?            @db.VarChar(255)
   property_amenity property_amenity[]
   property_room    property_room[]
 }
@@ -45,6 +47,7 @@ model property_room {
   @@id([property_id, room_id], map: "prop_room_key")
 }
 
+/// This model contains an expression index which requires additional setup for migrations. Visit https://pris.ly/d/expression-indexes for more info.
 model room {
   id            String          @id @db.Char(36)
   name          String?         @db.VarChar(50)

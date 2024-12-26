@@ -2,6 +2,8 @@ export default class PropertyResponseDto {
     
     id: string;
     
+    title: string;
+
     price: string;
     
     areaInfo: string;
