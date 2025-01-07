@@ -10,4 +10,5 @@ export interface IPropertyService {
     getAllProperties(): Promise<Property[]>;
     removePropertyById(id: string): Promise<Property>;
     getPropertyView(propertyId: string): Promise<PropertyView | null>;
+    addPropertyPhotos(propId: string, photos: string[])
 }

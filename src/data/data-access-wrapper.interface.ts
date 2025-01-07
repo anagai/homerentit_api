@@ -1,5 +1,6 @@
 import { TableNames } from '../types/database.model';
 import IPrismaClient from './prisma-client.interface';
+import { property as Property } from "@prisma/client";
 
 export default interface IDataAccessWrapper {
   add<T>(tableName: TableNames, record: any): Promise<T>;
@@ -8,5 +9,5 @@ export default interface IDataAccessWrapper {
   getById<T>(tableName: TableNames, id: string): Promise<T>;
   getAll<T>(tableName: string): Promise<T[]>;
   getClient(): IPrismaClient;
-  query(sql: string, values: any[]): Promise<any>
+  query(sql: string, values: any[]): Promise<any>;
 }

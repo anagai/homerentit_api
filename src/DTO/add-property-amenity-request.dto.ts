@@ -1,10 +1,12 @@
-import { IsRequiredString } from 'src/decorators/validation.decorators';
+import { IsArray, ValidateNested } from 'class-validator'
+import { PropertyAmenityDto } from './property-amenity.dto';
+import { Type } from 'class-transformer';
 
 export default class AddPropertyAmenityRequestDto {
     
-    @IsRequiredString(36)
-    propertyId: string;
+    @IsArray()
+    @ValidateNested({ each: true})
+    @Type(()=>PropertyAmenityDto)
+    amenities: PropertyAmenityDto[];
 
-    @IsRequiredString(36)
-    amenityId: string;
 }

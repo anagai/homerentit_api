@@ -24,6 +24,7 @@ model property {
   max_guests       Int?
   price            Decimal?           @db.Decimal(8, 2)
   title            String?            @db.VarChar(255)
+  photos           String?
   property_amenity property_amenity[]
   property_room    property_room[]
 }

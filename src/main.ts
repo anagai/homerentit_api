@@ -9,7 +9,7 @@ async function bootstrap() {
   // Instantiate ValidationPipe. Will transform incoming data to DTOs
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
   // Sanitize all incoming data
-  app.useGlobalPipes(new SanitizePipe());
+  //app.useGlobalPipes(new SanitizePipe());
   // set /api as base path for endpoints
   app.setGlobalPrefix('api');
   app.enableCors({
@@ -23,6 +23,7 @@ async function bootstrap() {
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Allow specific methods
     //credentials: true, // Allow credentials
   });
+  app.useStaticAssets('./photos', {prefix: '/photos/'});
   await app.listen(process.env.PORT ?? 3080);
 }
 bootstrap();

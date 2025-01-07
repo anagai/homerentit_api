@@ -1,5 +1,5 @@
 import { IsRequiredString } from 'src/decorators/validation.decorators';
-import { IsInt, IsNumber, IsString, MaxLength } from 'class-validator';
+import { IsInt, IsNumber, IsOptional, IsString, MaxLength } from 'class-validator';
 import { property as Property } from '@prisma/client';
 
 
@@ -29,4 +29,8 @@ export default class UpdatePropertyRequestDto {
 
     @IsNumber()
     price: number;
+
+    @IsString()
+    @IsOptional()
+    photos: string;
 }

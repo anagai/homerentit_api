@@ -16,4 +16,6 @@ export default class PropertyResponseDto {
     
     state: string;
 
+    photos: string;
+
 }

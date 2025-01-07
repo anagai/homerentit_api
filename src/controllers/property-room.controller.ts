@@ -18,13 +18,16 @@ export default class PropertyRoomController {
     async add(@Body() request: AddPropertyRoomRequestDto): Promise<StatusResponse> {
         
         try {
-        const propRoom: PropertyRoom = { 
-            property_id: request.propertyId, 
-            room_id: request.roomId,
-            room_count: request.roomCount
-        };
-        await this._propertyRoomService.addPropertyRoom(propRoom);
-        return ResponseHelper.successResponse();
+            let propRoom: PropertyRoom;
+            for(const item of request.rooms) {
+                propRoom = {
+                    property_id: item.propertyId, 
+                    room_id: item.roomId, 
+                    room_count: item.roomCount}
+                await this._propertyRoomService.addPropertyRoom(propRoom);
+            }
+        
+            return ResponseHelper.successResponse();
         } catch (error) {
         console.error("Error in PropertyRoomController.add:", error);
         ErrorHandlerHelper.CatchErrorHandler(error);

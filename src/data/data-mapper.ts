@@ -24,7 +24,8 @@ export default class DataMapper implements IDataMapper{
             description: dto.description,
             max_guests: dto.maxGuests,
             city: dto.city,
-            state: dto.state
+            state: dto.state,
+            photos: dto.photos || ''
         };
         return property;
     }
@@ -38,7 +39,8 @@ export default class DataMapper implements IDataMapper{
             description: dto.description,
             max_guests: dto.maxGuests,
             city: dto.city,
-            state: dto.state
+            state: dto.state,
+            photos: dto.photos || ''
         };
         return property;
     }
@@ -52,7 +54,8 @@ export default class DataMapper implements IDataMapper{
             state: property.state,
             areaInfo: property.area_info,
             maxGuests: property.max_guests,
-            price: property.price.toFixed(2) // Convert price to string
+            price: property.price.toFixed(2), // Convert price to string
+            photos: property.photos
         }
         return response;
     }

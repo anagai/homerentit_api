@@ -1,16 +1,12 @@
-import { IsInt, Min } from 'class-validator';
-import { IsRequiredString } from 'src/decorators/validation.decorators';
+import { IsArray, ValidateNested } from 'class-validator';
+import { Type } from 'class-transformer';
+import { PropertyRoomDto } from './property-room.dto';
 
 export default class AddPropertyRoomRequestDto {
     
-    @IsRequiredString(36)
-    propertyId: string;
-
-    @IsRequiredString(36)
-    roomId: string;
-
-    @IsInt()
-    @Min(1)
-    roomCount: number;
+    @IsArray()
+    @ValidateNested({ each: true})
+    @Type(()=>PropertyRoomDto)
+    rooms: PropertyRoomDto[];
 
 }

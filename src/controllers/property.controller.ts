@@ -1,5 +1,6 @@
 import { v4 as uuid } from 'uuid';
-import { Controller, Inject, Param, Get, Post, Put, Delete, Body } from '@nestjs/common';
+import { Controller, Inject, Param, Get, Post, Put, Delete, Body, UseInterceptors, UploadedFiles, Req } from '@nestjs/common';
+
 import NotFoundException from 'src/exceptions/not-found.exception';
 import { IPropertyService } from 'src/services/property-service.interface';
 import IocTypes from 'src/types/ioc-types';
@@ -12,6 +13,10 @@ import PropertyResponseDto from 'src/DTO/property-response.dto';
 import IdRequestDto from 'src/DTO/id-request.dto';
 import ResponseHelper from 'src/helpers/response-helper';
 import { StatusResponse } from 'src/types/status-response.type';
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
+import { multerConfig } from 'src/middleware/multerConfig';
+import { UploadPhotosRequestDto } from 'src/DTO/upload-photos-request.dto';
+import { Status } from 'src/constants';
 
 @Controller('property')
 export default class PropertyController {
@@ -32,6 +37,27 @@ export default class PropertyController {
      } 
   }
 
+  @Post('upload-photos')
+  @UseInterceptors(FilesInterceptor('photos', 10, multerConfig))
+  async uploadPhotos(
+    @UploadedFiles() photos: Express.Multer.File[],
+    @Body() request: UploadPhotosRequestDto,
+    @Req() req: any
+  ): Promise<StatusResponse> {
+    try {
+      console.log("photos:", photos);
+      console.log('req uploadedfiles:',req.uploadedFiles);
+      //console.log('Image Uploaded:', req.fileName);
+      console.log("PropertyId:", request.propertyId);
+      await this._propService.addPropertyPhotos(request.propertyId, req.uploadedFiles);
+      return ResponseHelper.successResponse();
+      //return await this._propService.addPropertyPhoto(request.propertyId, req.fileName);
+    } catch(error) {
+      console.error('Error in PropertyController.uploadPhotos: ', error);
+      ErrorHandlerHelper.CatchErrorHandler(error); 
+    }
+  }
+
   @Put()
   async update(@Body() request: UpdatePropertyRequestDto): Promise<PropertyResponseDto> {
       try {
@@ -43,6 +69,8 @@ export default class PropertyController {
         ErrorHandlerHelper.CatchErrorHandler(error);
       }
   }
+
+  
 
   @Get()
   async getAll(): Promise<Property[]> {
@@ -58,9 +86,7 @@ export default class PropertyController {
   async getById(@Param() params: IdRequestDto): Promise<Property> {
       try {
         const result = await this._propService.getPropertyById(params.id);
-        if (!result) {
-          throw new NotFoundException('Property not found');
-        }
+
         return result;
       } catch(error) {
         console.error("Error in PropertyController.getById:", error);

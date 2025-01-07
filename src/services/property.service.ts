@@ -7,6 +7,7 @@ import { PropertyView } from 'src/types/database.model';
 import IocTypes from 'src/types/ioc-types';
 import IDataAccessWrapper from 'src/data/data-access-wrapper.interface';
 import { Tables } from '../constants'
+import NotFoundException from 'src/exceptions/not-found.exception';
 
 @Injectable()
 export default class PropertyService implements IPropertyService {
@@ -24,7 +25,15 @@ export default class PropertyService implements IPropertyService {
   }
 
   async getPropertyById(id: string): Promise<Property>{
-      return await this._dbAccess.getById<Property>(Tables.PROPERTY, id);
+      try {
+      const result = await this._dbAccess.getById<Property>(Tables.PROPERTY, id);
+      if (!result) {
+        throw new NotFoundException('Property not found');
+      }
+      return result;
+    } catch(e) {
+      console.error('getPropertyById err:',e);
+    }
   }
 
   async getAllProperties(): Promise<Property[]> {
@@ -66,5 +75,15 @@ export default class PropertyService implements IPropertyService {
     `;
     const result = await this._dbAccess.query(sql, [propertyId]);
     return result && result.length>0 ? result[0] as PropertyView : null;
+  }
+
+  async addPropertyPhotos(propId: string, photos: string[]) {
+    try {
+      const property = await this.getPropertyById(propId);
+      property.photos = photos ? JSON.stringify(photos) : '';
+      return await this.updateProperty(property);
+    } catch (e) {
+      console.log('addpropertyphoto error:',e);
+    }
   }
 }

@@ -1,5 +1,5 @@
 import { IsRequiredString } from 'src/decorators/validation.decorators';
-import { IsCurrency, IsInt, IsString, MaxLength, Min } from 'class-validator';
+import { IsCurrency, IsInt, IsOptional, IsString, MaxLength, Min } from 'class-validator';
 
 
 export default class AddPropertyRequestDto {
@@ -27,4 +27,9 @@ export default class AddPropertyRequestDto {
     @IsRequiredString()
     @IsCurrency()
     price: string;
+
+    @IsString()
+    @IsOptional()
+    photos: string;
+
 }
