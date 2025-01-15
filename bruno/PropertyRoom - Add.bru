@@ -1,0 +1,19 @@
+meta {
+  name: PropertyRoom - Add
+  type: http
+  seq: 19
+}
+
+post {
+  url: http://localhost:3080/api/property/room
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "propertyId": "e8f95302-cead-47ce-9391-40f3b0d42724",
+    "roomId": "44038a0a-60b3-42f3-8bfe-c4acb2386817",
+    "roomCount": 5
+  }
+}

@@ -1,0 +1,17 @@
+meta {
+  name: Room - Add
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:3080/api/room
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Bathroom"
+  }
+}

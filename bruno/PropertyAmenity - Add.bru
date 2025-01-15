@@ -1,0 +1,22 @@
+meta {
+  name: PropertyAmenity - Add
+  type: http
+  seq: 16
+}
+
+post {
+  url: http://localhost:3080/api/property/amenity/e8f95302-cead-47ce-9391-40f3b0d42724/b19e31e9-7045-4553-8ffc-2100ad8c20e1
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "description": "Cozy home",
+    "areaInfo": "fantastic area",
+    "city": "some city",
+    "state": "CA",
+    "maxGuests": 6,
+    "price": "1234.34"
+  }
+}

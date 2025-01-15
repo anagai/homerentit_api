@@ -1,0 +1,17 @@
+meta {
+  name: Amenity - Add
+  type: http
+  seq: 6
+}
+
+post {
+  url: http://localhost:3080/api/amenity
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Air Conditioning"
+  }
+}

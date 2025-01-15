@@ -1,0 +1,22 @@
+meta {
+  name: PropertyRoom - Get Rooms
+  type: http
+  seq: 20
+}
+
+get {
+  url: http://localhost:3080/api/property/room/e8f95302-cead-47ce-9391-40f3b0d42724
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "description": "Cozy home",
+    "areaInfo": "fantastic area",
+    "city": "some city",
+    "state": "CA",
+    "maxGuests": 6,
+    "price": "1234.34"
+  }
+}

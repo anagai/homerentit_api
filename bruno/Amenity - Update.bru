@@ -1,0 +1,18 @@
+meta {
+  name: Amenity - Update
+  type: http
+  seq: 9
+}
+
+put {
+  url: http://localhost:3080/api/amenity
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "id": "f10f090e-3257-4710-8886-3e6a560a3d0d",
+    "name": "Air Conditioning 2"
+  }
+}

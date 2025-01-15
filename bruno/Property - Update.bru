@@ -1,0 +1,23 @@
+meta {
+  name: Property - Update
+  type: http
+  seq: 14
+}
+
+put {
+  url: http://localhost:3080/api/property
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "id": "7e1ed22c-634c-448c-9bd4-394894dff20b",
+    "description": "Cozy home2",
+    "areaInfo": "fantastic area",
+    "city": "some city",
+    "state": "CA",
+    "maxGuests": 6,
+    "price": "1234.34"
+  }
+}

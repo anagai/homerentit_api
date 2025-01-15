@@ -1,0 +1,22 @@
+meta {
+  name: PropertyAmenity - Delete
+  type: http
+  seq: 18
+}
+
+delete {
+  url: http://localhost:3080/api/property/amenity/e8f95302-cead-47ce-9391-40f3b0d42724/91ee3567-6453-4666-a57f-d0ab7eeb9426
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "description": "Cozy home",
+    "areaInfo": "fantastic area",
+    "city": "some city",
+    "state": "CA",
+    "maxGuests": 6,
+    "price": "1234.34"
+  }
+}
